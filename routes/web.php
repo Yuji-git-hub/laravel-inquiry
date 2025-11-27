@@ -7,9 +7,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/inquiries', [InquiryController::class, 'index']);
-Route::post('/inquiries',[InquiryController::class, 'post']);
-Route::get('/inquiries', [InquiryController::class, 'complete']);
-
-
-
+Route::get('/inquiries', [InquiryController::class, 'index'])->name('inquiries.index');
+Route::post('/inquiries',[InquiryController::class, 'store'])->name('inquiries.store');
+Route::get('/inquiries/complete', [InquiryController::class, 'complete'])->name('inquiries.complete');
