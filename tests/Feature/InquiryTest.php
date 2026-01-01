@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
+use function Pest\Laravel\assertDatabaseHas;
 use function Pest\Laravel\get;
 use function Pest\Laravel\post;
 
@@ -21,7 +22,7 @@ test('お問い合わせ内容が保存される', function () {
     ])
         ->assertRedirect();
 
-    $this->assertDatabaseHas('inquiries', [
+    assertDatabaseHas('inquiries', [
         'email' => 'test@example.com',
         'type' => 'recruit',
     ]);
