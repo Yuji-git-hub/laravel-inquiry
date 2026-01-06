@@ -12,13 +12,13 @@
         @csrf
 
         <label for="name">名前: </label>
-        <input type="text" name="name" value="{{ old('name') }}">
+        <input type="text" name="name" value="{{ old('name') }}"><br>
 
         <label for="email">メールアドレス: </label>
-        <input type="text" name="email" value="{{ old('email') }}">
+        <input type="text" name="email" value="{{ old('email') }}"><br>
 
         <label for="email">パスワード: </label>
-        <input type="text" name="password">
+        <input type="text" name="password"><br>
 
         <button type="submit">登録</button>
     </form>
