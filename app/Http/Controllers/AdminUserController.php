@@ -46,7 +46,7 @@ class AdminUserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $user->update($request->all());
+        $user->update($request->validated());
 
         return redirect()->route('admin.users.index')
                          ->with('success', 'ユーザーを更新しました。');
