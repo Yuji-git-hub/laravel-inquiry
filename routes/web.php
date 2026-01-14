@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\ProfileController;
@@ -25,9 +24,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->prefix('/admin')->group(function () {
-    Route::get('/inquiries', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/inquiries/{id}', [AdminController::class, 'show'])->name('admin.show');
-
     Route::prefix('/users')->group(function() {
         Route::get('/create', [AdminUserController::class, 'create'])->name('admin.users.create');
         Route::get('', [AdminUserController::class, 'index'])->name('admin.users.index');
