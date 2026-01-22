@@ -3,47 +3,54 @@
 namespace App\Infrastructure\AdminUser;
 
 use App\Domains\AdminUser\AdminUser;
+use App\Domains\AdminUser\AdminUserId;
 use App\Domains\AdminUser\SearchAdminUserCriteria;
 use App\Infrastructure\AdminUser\Hydrator\AdminUserHydrator;
+use App\Infrastructure\AdminUserRepositoryInterface;
 use App\Models\User as AdminUserModel;
+use Illuminate\Pagination\LengthAwarePaginator;
 
-class AdminUserRepository
+final class AdminUserRepository implements AdminUserRepositoryInterface
 {
-    private AdminUserHydrator $hydrator;
-
-    public function __construct(AdminUserHydrator $hydrator)
-    {
-        $this->hydrator = $hydrator;
-    }
+    public function __construct(
+        private AdminUserHydrator $hydrator
+    ) {}
 
     public function paginateByCriteria(
         SearchAdminUserCriteria $criteria,
-        int $perPage = 15
-    ) {
-        $query = AdminUserModel::query();
+        int $perPage = 10
+    ): LengthAwarePaginator {
+        $paginator = AdminUserModel::query()
+            ->orderByDesc('created_at')
+            ->paginate($perPage);
 
-        if($criteria->name !== null) {
-            $query->where('name', 'like', '%' . $criteria->name . '$');
-        }
+        $paginator->getCollection()->transform(
+            fn (AdminUserModel $model) =>
+                $this->hydrator->hydrate($model)
+        );
 
-        if ($criteria->email !== null) {
-            $query->where('email', $criteria->email->value);
-        }
+        return $paginator;
+    }
 
-        if ($criteria->createdFrom !== null) {
-            $query->where('created_at', '>=', $criteria->createdFrom);
-        }
+    public function findById(AdminUserId $id): ?AdminUser
+    {
+        $model = AdminUserModel::query()->find($id);
 
-        if ($criteria->createdTo !== null) {
-            $query->where('created_at', '<=', $criteria->createdTo);
-        }
-
-        return $query->paginate($perPage);
+        return $model ? $this->hydrator->hydrate($model) : null;
     }
 
     public function persist(AdminUser $entity): void
     {
-        $model = $this->hydrator->toModel($entity);
+        $model = $entity->getId()->value() > 0
+            ? AdminUserModel::query()->find($entity->getId()->value())
+            : new AdminUserModel();
+
+        $model->name = $entity->getName();
+        $model->email = $entity->getEmail();
+        $model->password = $entity->getPassword()->getHash();
+        $model->remember_token = $entity->getRememberToken();
+        $model->email_verified_at = $entity->getEmailVerifiedAt();
+
         $model->save();
     }
 }
