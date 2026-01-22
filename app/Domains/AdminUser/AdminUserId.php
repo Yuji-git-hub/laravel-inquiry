@@ -18,8 +18,13 @@ final readonly class AdminUserId
         return $this->value;
     }
 
-    public function equals(AdminUserID $other): bool
+    public function equals(AdminUserId $other): bool
     {
         return $this->value === $other->value;
+    }
+
+    public function value(): int
+    {
+        return $this->value;
     }
 }

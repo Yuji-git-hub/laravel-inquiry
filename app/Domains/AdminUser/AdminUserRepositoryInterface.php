@@ -4,19 +4,17 @@ namespace App\Infrastructure;
 
 use App\Domains\AdminUser\AdminUser;
 use App\Domains\AdminUser\AdminUserId;
-use App\Domains\AdminUser\EmailAddress;
 use App\Domains\AdminUser\SearchAdminUserCriteria;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 interface AdminUserRepositoryInterface
 {
-    public function save(AdminUser $adminUser): void;
-
     public function findById(AdminUserId $id): ?AdminUser;
 
-    public function findByEmail(EmailAddress $email): ?AdminUser;
+    public function paginateByCriteria(
+        SearchAdminUserCriteria $criteria,
+        int $perPage = 10
+    ): LengthAwarePaginator;
 
-    /**
-     * @return AdminUser[]
-     */
-    public function search(SearchAdminUserCriteria $criteria): array;
+    public function persist(AdminUser $entity): void;
 }
