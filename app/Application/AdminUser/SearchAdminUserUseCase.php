@@ -3,13 +3,13 @@
 namespace App\Application\AdminUser;
 
 use App\Domains\AdminUser\SearchAdminUserCriteria;
-use App\Infrastructure\AdminUserRepositoryInterface;
+use App\Infrastructure\AdminUser\AdminUserRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 final class SearchAdminUserUseCase
 {
     public function __construct(
-        private AdminUserRepositoryInterface $repository,
+        private AdminUserRepository $repository,
     ) {}
 
     public function handle(
