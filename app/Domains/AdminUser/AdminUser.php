@@ -47,6 +47,16 @@ class AdminUser
         return $this->rememberToken;
     }
 
+    public function changeName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function changeEmail(EmailAddress $email): void
+    {
+        $this->email = $email;
+    }
+
     public function updateAttributes(
         AdminUserAttributes $attributes,
         CarbonImmutable $now
