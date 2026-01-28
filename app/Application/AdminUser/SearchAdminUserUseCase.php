@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\AdminUser\Search;
+namespace App\Application\AdminUser;
 
 use App\Domains\AdminUser\SearchAdminUserCriteria;
 use App\Infrastructure\AdminUserRepositoryInterface;
