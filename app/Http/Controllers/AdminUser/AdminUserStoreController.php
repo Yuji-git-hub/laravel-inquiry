@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\AdminUser;
 
-use App\Application\AdminUser\Create\CreateAdminUserUseCase;
+use App\Application\AdminUser\CreateAdminUserUseCase;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAdminUserRequest;
 

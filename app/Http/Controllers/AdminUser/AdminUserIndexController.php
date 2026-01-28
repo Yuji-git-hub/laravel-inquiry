@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\AdminUser;
 
-use App\Application\AdminUser\Search\SearchAdminUserUseCase;
+use App\Application\AdminUser\SearchAdminUserUseCase;
 use App\Domains\AdminUser\EmailAddress;
 use App\Domains\AdminUser\SearchAdminUserCriteria;
 use App\Http\Controllers\Controller;
@@ -25,10 +25,10 @@ final class AdminUserIndexController extends Controller
             null,
         );
 
-        $users = $this->useCase->handle($criteria);
+        $adminUsers = $this->useCase->handle($criteria);
 
         return view('admin.users.index',[
-            'users' => $users,
+            'adminUsers' => $adminUsers,
         ]);
     }
 }
