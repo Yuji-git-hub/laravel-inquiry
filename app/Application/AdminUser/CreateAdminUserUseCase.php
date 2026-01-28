@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\AdminUser\Create;
+namespace App\Application\AdminUser;
 
 use App\Domains\AdminUser\EmailAddress;
 use App\Domains\AdminUser\Password;
